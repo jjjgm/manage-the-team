@@ -1,20 +1,18 @@
 const inquirer = require('inquirer');
-const mysql = require('/');
+const mysql = require('mysql2')
 const cTable = require('console.table');
 
 
-const prompt = require('prompt');
-inquirer.prompt(prompt);
-[
-    {
-        intro:'What would you like to?',
+    inquirer.prompt[
+        {
+        message:'What would you like to?',
         type: 'list',
         choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles',  'Add Role', 'View All Departments', 'Add Department', 'Quit']
     }
-];
+]
 
+imquirer.prompt
 [
-    ,
     {
         role:'What is the name of the role?',
         type: 'input',
