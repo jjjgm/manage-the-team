@@ -1,0 +1,18 @@
+{
+  "name": "manage-the-team",
+  "version": "1.0.0",
+  "description": "An SQL project management tool to help track employees across roles and departments.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.4",
+    "mysql2": "^3.2.0"
+  }
+}
