@@ -11,7 +11,7 @@ const cTable = require('console.table');
     }
 ]
 
-imquirer.prompt
+inquirer.prompt
 [
     {
         role:'What is the name of the role?',
@@ -64,7 +64,7 @@ imquirer.prompt
     {
         assignment: 'Which role do you want to assign the assign the selected employee?',
         type: 'list',
-        choices: ['Sales Lead','Salesperson','Lead Engineer','Software Engineer','Account Manager', 'Accountant','Legal Team Lead']
+        choices: ['Sales Lead','Salesperson','Lead Engineer','Software Engineer','Account Manager', 'Accountant','Legal Team Lead', 'Lawyer',]
     }
 ];
 
