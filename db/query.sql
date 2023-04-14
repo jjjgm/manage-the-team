@@ -1,4 +1,0 @@
-SELECT *
-FROM department
-JOIN
-ORDER BY

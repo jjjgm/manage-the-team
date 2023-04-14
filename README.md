@@ -2,6 +2,9 @@
 An SQL project management tool to help track employees across roles and departments. 
 
 ## DESCRIPTION
+Provided is the criteria for the assingment.
+
+
         Acceptance Criteria:
         GIVEN a command-line application that accepts user input
         WHEN I start the application
@@ -32,6 +35,7 @@ An SQL project management tool to help track employees across roles and departme
 
 
 ## Usage
+This is a tool to help an employer add employess and to their database by oraganizing them by their corresponding role, department, salary, and manager.
 
 ## License
 
@@ -44,7 +48,14 @@ MIT License
 
 [NPM Inquirer Prompt Types](https://www.npmjs.com/package/inquirer#answers)
 
-[]()
+
+UCLA.edx tutor, Phillip Loy on 4/13
+assistance from class peer, Roye Bustan on 4/12 and 4/13
+
+## Assets
+
+[Submission Video]()
+)
 
 
 

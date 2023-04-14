@@ -176,7 +176,7 @@ async function addRole() {
 
 async function newEmployee() {
     db.query('SELECT title name, id value FROM role', (err, empRole) => {
-        db.query('SELECT manager_id name FROM employee', (err, empManager) => {
+        db.query('SELECT id value FROM employee WHERE manager_id is null', (err, empManager) => {
             inquirer.prompt([
                 {
                     name: 'firstname',
