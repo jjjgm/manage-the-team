@@ -23,12 +23,12 @@ An SQL project management tool to help track employees across roles and departme
 
 ## Install
 
-Inquirer Version 8.2.4
-MySQL2 3.2.0
-MySQL WorkBench 3.0.0
-Git Ignore
-Console Table
-Node & Npm Install via CLI
+        Inquirer Version 8.2.4
+        MySQL2 3.2.0
+        MySQL WorkBench 3.0.0
+        Git Ignore
+        Console Table
+        Node & Npm Install via CLI
 
 
 ## Usage

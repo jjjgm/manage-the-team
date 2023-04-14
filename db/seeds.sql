@@ -1,3 +1,0 @@
--- SQLBook: Code
-
-INSERT INTO 
