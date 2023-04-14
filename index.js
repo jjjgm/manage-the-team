@@ -2,108 +2,128 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2')
 const cTable = require('console.table');
 
-const introList = {
-    viewAllEmployees: "View All Employees",
-    addEmployee: "Add Employee", 
-    updateEmployeeRole: "Update Employee Role",
-    viewAllRoles: "View All Roles", 
-    addRole: "Add Role", 
-    viewAllDepartments: "View All Departments", 
-    addDepartment: "Add Department",
-    quit: "Quit",
-}
 
+
+    quit: ,
+}
 
 
 const introRequest = () => {
-inquirer.prompt[
-    {
-    name:'intro',
-    message:'What would you like to?',
-    type: 'list',
-    choices: [ 
-        introList.viewAllEmployees,
-        introList.addDepartment,
-        introList.updateEmployeeRole,
-        introList.viewAllRoles,
-        introList.addRole,
-        introList.viewAllDepartments,
-        introList.addDepartment,
-        introList.quit
+    inquirer.prompt[
+        {
+            name: 'intro',
+            message: 'What would you like to?',
+            type: 'list',
+            choices: [
+                'View All Employees',
+                'Add Employee',
+                'Update Employee Role',
+                'View All Roles',
+                'Add Role',
+                'View All Departments',
+                'Add Department',
+                'Quit'
+            ]
+        }
     ]
-}
-]
-.then ((answer) => {
-    console.log(answer);
+        .then((response) => {
+            console.log(response);
 
-    switch(answer.intro) {
-        case introList.viewAllEmployees:
-            viewEmployees();
-        break;
+            switch (response.intro) {
+                case 'View All Employees':
+                    viewEmployees();
+                    break;
 
-        case introList.addDepartment:
-            newEmployee();
-        break;
+                case 'Add Employee':
+                    newEmployee();
+                    break;
 
-        case introList.updateEmployeeRole:
-            updateEmployeeRole();
-        break;
+                case 'Update Employee Role':
+                    updateEmployeeRole();
+                    break;
 
-        case introList.viewAllRoles:
-            viewRoles();
-        break;
+                case 'View All Roles':
+                    viewRoles();
+                    break;
 
-        case introList.addRole:
-            addRole();
-        break;
+                case 'Add Role':
+                    addRole();
+                    break;
 
-        case introList.viewAllDepartments:
-            viewDepartments();
-        break;
+                case 'View All Departments':
+                    viewDepartments();
+                    break;
 
-        case introList.addDepartment:
-            addDepartment();
-        break;
+                case 'Add Department':
+                    addDepartment();
+                    break;
 
-        case introList.quit:
-            connection.end();
-        break;
+                case 'Quit':
+                    connection.end();
+                    break;
 
-        default:
-        break;
-    }
-})
+                default:
+                    break;
+            }
+        })
 }
 
-function viewEmployees() {
+ async function viewEmployees() {
 }
 
-function newEmployee () {
+async function newEmployee() {
 }
 
-function viewRoles() {
+async function viewRoles() {
 }
-function addRole() {
-
+async function addRole() {
+    inquirer.prompt([
+        {
+            name: 'roleAdd',
+            message: 'What is the name of the role you want to add?',
+            type: 'input'
+        }
+        ,
+        {
+            name: 'salary',
+            message: 'What is the salary of the new role being added?',
+            type: 'number'
+        }
+        ,
+        {
+            name: 'department',
+            message: 'What is the department ID in which this new role be in?',
+            type: 'list',
+            choices: introList.viewAllDepartments
+        }
+    ]).then((response) => {
+    ))
 }
 
-function viewDepartments() {
+async function viewDepartments() {
 }
 
 async function addDepartment() {
 }
 
 async function updateEmployeeRole() {
- const employeeId = await inquirer.prompt(askEmployeeId());
+    const employeeUpdate = await inquirer.prompt
 
- const { role } = await inquirer.prompt([
-    {
-    name: 'role',
-    type: 'list',
-    choices: '',
-    message: 'Which role do you want to assign the selected employee?: '
-    }
- ])
+    const roleUpdate = await inquirer.prompt([
+        {
+            name: 'employee',
+            type: 'list',
+            choices: '',
+            message: 'Which employee\'s role do you want to update?'
+        }
+        ,
+        {
+            name: 'role',
+            type: 'list',
+            choices: '',
+            message: 'Which role do you want to assign the selected employee?: '
+        }
+    ])
 }
 
 function quit() {

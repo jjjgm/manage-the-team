@@ -1,4 +1,4 @@
-SELECT *
-FROM department.department_name
+SELECT 
+FROM department
 LEFT JOIN
 ORDER BY
