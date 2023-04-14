@@ -1,4 +1,4 @@
-SELECT 
+SELECT *
 FROM department
-LEFT JOIN
+JOIN
 ORDER BY

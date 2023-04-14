@@ -2,14 +2,18 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2')
 const cTable = require('console.table');
 
-
-
-    quit: ,
-}
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        port: 3306,
+        user: 'root',
+        password: 'Sqlpass@',
+        database: 'employee_tracker'
+    });
 
 
 const introRequest = () => {
-    inquirer.prompt[
+    inquirer.prompt([
         {
             name: 'intro',
             message: 'What would you like to?',
@@ -25,50 +29,53 @@ const introRequest = () => {
                 'Quit'
             ]
         }
-    ]
-        .then((response) => {
-            console.log(response);
+    ]).then((response) => {
+        console.log(response);
 
-            switch (response.intro) {
-                case 'View All Employees':
-                    viewEmployees();
-                    break;
+        switch (response.intro) {
+            case 'View All Employees':
+                viewEmployees();
+                break;
 
-                case 'Add Employee':
-                    newEmployee();
-                    break;
+            case 'Add Employee':
+                newEmployee();
+                break;
 
-                case 'Update Employee Role':
-                    updateEmployeeRole();
-                    break;
+            case 'Update Employee Role':
+                updateEmployeeRole();
+                break;
 
-                case 'View All Roles':
-                    viewRoles();
-                    break;
+            case 'View All Roles':
+                viewRoles();
+                break;
 
-                case 'Add Role':
-                    addRole();
-                    break;
+            case 'Add Role':
+                addRole();
+                break;
 
-                case 'View All Departments':
-                    viewDepartments();
-                    break;
+            case 'View All Departments':
+                viewDepartments();
+                break;
 
-                case 'Add Department':
-                    addDepartment();
-                    break;
+            case 'Add Department':
+                addDepartment();
+                break;
 
-                case 'Quit':
-                    connection.end();
-                    break;
+            case 'Quit':
+                connection.end();
+                break;
 
-                default:
-                    break;
-            }
-        })
+            default:
+                break;
+        }
+    })
 }
 
- async function viewEmployees() {
+async function viewEmployees() {
+    db.query('SELECT * FROM employee',(err,data)=>{
+        console.table(data)
+        introRequest();
+    })
 }
 
 async function newEmployee() {
@@ -76,6 +83,8 @@ async function newEmployee() {
 
 async function viewRoles() {
 }
+
+
 async function addRole() {
     inquirer.prompt([
         {
@@ -94,34 +103,71 @@ async function addRole() {
             name: 'department',
             message: 'What is the department ID in which this new role be in?',
             type: 'list',
-            choices: introList.viewAllDepartments
+            choices: [connection.query('SELECT * FROM department')]
         }
     ]).then((response) => {
-    ))
+        connection.query(
+            'UPDATE employee SET role_id=? WHERE id=?',
+            //update id for the role and update employee id accordingly
+            (err, response) => {
+                if (err) throw err;
+                console.log('You have updated their role successfully');
+            }
+        );
+    });
 }
 
 async function viewDepartments() {
+    db.query('SELECT * FROM department;', (err, res) => {
+        console.table(res);
+        introRequest();
+    }
+    )
 }
 
 async function addDepartment() {
+    connection.query()
 }
 
 async function updateEmployeeRole() {
-    const employeeUpdate = await inquirer.prompt
+    db.query('SELECT concat(first_name," ", last_name) name FROM employee', (err, employeeData) => {
+        db.query('SELECT title name, id value FROM role', (err, roleData) => {
+            inquirer.prompt([
+                {
+                    name: 'employee',
+                    type: 'list',
+                    choices: employeeData,
+                    message: 'Which employee\'s role do you want to update?'
+                }
+                ,
+                {
+                    name: 'role',
+                    type: 'list',
+                    choices: roleData,
+                    message: 'Which role do you want to assign the selected employee?: '
+                }
+            ]).then((response) => {
+                db.query('update employee set role_id=? where id=?', [response.role, response.employee], (err, roleData) => {
+                    viewEmployees()
+                })
+            })
+        })
+    })
+}
 
-    const roleUpdate = await inquirer.prompt([
+
+function getName() {
+    ([
         {
-            name: 'employee',
-            type: 'list',
-            choices: '',
-            message: 'Which employee\'s role do you want to update?'
+            name: 'firstname',
+            message: 'Please enter employee\'s first name',
+            type: 'input'
         }
         ,
         {
-            name: 'role',
-            type: 'list',
-            choices: '',
-            message: 'Which role do you want to assign the selected employee?: '
+            name: 'lastname',
+            message: 'Please enter employee\'s last name',
+            type: 'input'
         }
     ])
 }
@@ -129,23 +175,6 @@ async function updateEmployeeRole() {
 function quit() {
 
 }
-
-
-//         firstName: 'What is the employees first name?',
-//         type: 'input',
-//         name: 'first name',
-//     }
-//     ,
-//     {
-//         LastName: 'What is the employees last name?',
-//         type: 'input',
-//         name: 'last name',
-//     }
-
-
-
-
-
 
 
 introRequest();
