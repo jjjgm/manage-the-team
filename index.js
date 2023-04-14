@@ -71,52 +71,6 @@ const introRequest = () => {
     })
 }
 
-async function viewEmployees() {
-    db.query('SELECT * FROM employee',(err,data)=>{
-        console.table(data)
-        introRequest();
-    })
-}
-
-async function newEmployee() {
-}
-
-async function viewRoles() {
-}
-
-
-async function addRole() {
-    inquirer.prompt([
-        {
-            name: 'roleAdd',
-            message: 'What is the name of the role you want to add?',
-            type: 'input'
-        }
-        ,
-        {
-            name: 'salary',
-            message: 'What is the salary of the new role being added?',
-            type: 'number'
-        }
-        ,
-        {
-            name: 'department',
-            message: 'What is the department ID in which this new role be in?',
-            type: 'list',
-            choices: [connection.query('SELECT * FROM department')]
-        }
-    ]).then((response) => {
-        connection.query(
-            'UPDATE employee SET role_id=? WHERE id=?',
-            //update id for the role and update employee id accordingly
-            (err, response) => {
-                if (err) throw err;
-                console.log('You have updated their role successfully');
-            }
-        );
-    });
-}
-
 async function viewDepartments() {
     db.query('SELECT * FROM department;', (err, res) => {
         console.table(res);
@@ -125,8 +79,33 @@ async function viewDepartments() {
     )
 }
 
+async function viewEmployees() {
+    db.query('SELECT * FROM employee', (err, data) => {
+        console.table(data)
+        introRequest();
+    })
+}
+
+async function viewRoles() {
+    db.query('SELECT * FROM role', (err, data) => {
+        console.table(data);
+        introRequest();
+    })
+}
+
 async function addDepartment() {
-    connection.query()
+    inquirer.prompt([
+        {
+            name: 'newDept',
+            message: 'What department would you like to add?',
+            type: 'input'
+        }
+    ]).then((response) => {
+        db.query('INSERT INTO department (name) VALUES (?);', [response.newDept],
+            (err, newDept) => {
+                viewDepartments();
+            });
+    })
 }
 
 async function updateEmployeeRole() {
@@ -155,25 +134,97 @@ async function updateEmployeeRole() {
     })
 }
 
-
-function getName() {
-    ([
-        {
-            name: 'firstname',
-            message: 'Please enter employee\'s first name',
-            type: 'input'
-        }
-        ,
-        {
-            name: 'lastname',
-            message: 'Please enter employee\'s last name',
-            type: 'input'
-        }
-    ])
+async function addRole() {
+    db.query('SELECT id name FROM department;', (err, dept) => {
+        inquirer.prompt([
+            {
+                name: 'title',
+                message: 'What is the name of the role you want to add?',
+                type: 'input'
+            }
+            ,
+            {
+                name: 'salary',
+                message: 'What is the salary of the new role being added?',
+                type: 'number'
+            }
+            ,
+            {
+                name: 'deptChoice',
+                message: 'What is the department will this new role be in?',
+                type: 'list',
+                choices: dept
+            }
+        ]).then((response) => {
+            db.query(
+                'INSERT INTO role SET ?',
+                {
+                    title: response.title,
+                    salary: response.salary,
+                    department_id: response.deptChoice
+                },
+                (err, res) => {
+                    if (err) throw err;
+                    console.log('You have added the role successfully');
+                },
+                viewRoles()
+            );
+        });
+    }
+    )
 }
 
-function quit() {
+async function newEmployee() {
+    db.query('SELECT title name, id value FROM role', (err, empRole) => {
+        db.query('SELECT manager_id name FROM employee', (err, empManager) => {
+            inquirer.prompt([
+                {
+                    name: 'firstname',
+                    message: 'Please enter employee\'s first name',
+                    type: 'input'
+                }
+                ,
+                {
+                    name: 'lastname',
+                    message: 'Please enter employee\'s last name',
+                    type: 'input'
+                }
+                ,
+                {
+                    name: 'role',
+                    message: 'Please select employee\'s new role',
+                    type: 'list',
+                    choices: empRole
+                }
+                ,
+                {
+                    name: 'manager',
+                    message: 'Please select the employee\'s manager',
+                    type: 'list',
+                    choices: empManager
+                }
+            ]).then((response) => {
+                db.query('INSERT INTO employee SET ?',
+                    {
+                        first_name: response.firstname,
+                        last_name: response.lastname,
+                        role_id: response.role,
+                        manager_id: response.manager
+                    },
+                    (err, res) => {
+                        if (err) throw err;
+                        console.log('You entered the new employee!');
+                    })
+                    viewEmployees()
+            });
+        });
+    });
+};
 
+
+
+function quit() {
+    prompt.close();
 }
 
 
