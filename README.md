@@ -54,8 +54,7 @@ assistance from class peer, Roye Bustan on 4/12 and 4/13
 
 ## Assets
 
-[Submission Video]()
-)
+[Submission Video](chrome-extension://mmeijimgabbpbgpdklnllpncmdofkcpn/app.html#/files/5df9be4b-7561-4537-y570-3d891dc8819c)
 
 
 

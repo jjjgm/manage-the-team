@@ -72,8 +72,12 @@ const introRequest = () => {
 }
 
 async function viewDepartments() {
-    db.query('SELECT * FROM department;', (err, res) => {
-        console.table(res);
+    db.query('SELECT * FROM department', (err, data) => {
+        if (err) {
+            console.log(err.message);
+            return;
+        }
+        console.table(data);
         introRequest();
     }
     )
@@ -81,6 +85,10 @@ async function viewDepartments() {
 
 async function viewEmployees() {
     db.query('SELECT * FROM employee', (err, data) => {
+        if (err) {
+            console.log(err.message);
+            return;
+        }
         console.table(data)
         introRequest();
     })
@@ -88,6 +96,10 @@ async function viewEmployees() {
 
 async function viewRoles() {
     db.query('SELECT * FROM role', (err, data) => {
+        if (err) {
+            console.log(err.message);
+            return;
+        }
         console.table(data);
         introRequest();
     })
@@ -135,7 +147,7 @@ async function updateEmployeeRole() {
 }
 
 async function addRole() {
-    db.query('SELECT id name FROM department;', (err, dept) => {
+    db.query('SELECT id name FROM department', (err, dept) => {
         inquirer.prompt([
             {
                 name: 'title',
